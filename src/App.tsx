@@ -39,7 +39,6 @@ export interface CharacterThumbnail {
 
 function App() {
   const [page, setPage] = useState(1)
-  const [selected, setSelected] = useState<number | null>(null)
 
   const { data, isLoading, isFetching } = useQuery(
     ['characters', page],
@@ -60,10 +59,6 @@ function App() {
     return
   }
 
-  const handleSelected = (id: number) => {
-    setSelected(id)
-  }
-
   return (
     <div className="App h-full">
       <Header total={data?.data.total} page={page} setPage={handlePageChange}/>
@@ -71,7 +66,7 @@ function App() {
         isLoading || isFetching
           ? <Loading isLoading={isLoading || isFetching} />
           : <div>
-              <Characters handleSelect={handleSelected} characters={data?.data.results} />
+              <Characters characters={data?.data.results} />
               <Footer attributionHTML={data?.attributionHTML} attributionText={data?.attributionText} copyright={data?.copyright}/>
             </div>
       }
